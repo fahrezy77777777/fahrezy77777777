@@ -1,0 +1,79 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QWidget, QLabel, QPushButton, QLineEdit
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Contoh Aplikasi")
+        self.setGeometry(100, 100, 400, 300)
+
+        label = QLabel("Masukkan nama:", self)
+        label.move(20, 50)
+
+        self.textbox = QLineEdit(self)
+        self.textbox.move(120, 50)
+        self.textbox.resize(200, 20)
+
+        button = QPushButton("Kirim", self)
+        button.move(120, 100)
+
+        # Membuat koneksi antara button dan metode slot
+        button.clicked.connect(self.onButtonClick)
+
+    def onButtonClick(self):
+        nama = self.textbox.text()
+        self.statusBar().showMessage(f"Halo, {nama}!")
+
+# Membuat dialog sederhana
+class Dialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Dialog Sederhana")
+        self.setGeometry(150, 150, 300, 200)
+
+        label = QLabel("Ini adalah dialog sederhana.", self)
+        label.move(20, 50)
+
+        button = QPushButton("Tutup", self)
+        button.move(100, 100)
+        button.clicked.connect(self.close)
+
+# Membuat widget sederhana
+class Widget(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Widget Sederhana")
+        self.setGeometry(200, 200, 200, 150)
+
+        label = QLabel("Ini adalah widget sederhana.", self)
+        label.move(20, 20)
+
+        button = QPushButton("Keluar", self)
+        button.move(60, 80)
+        button.clicked.connect(QApplication.instance().quit)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    # Membuat dan menampilkan MainWindow
+    main_window = MainWindow()
+    main_window.show()
+
+    # Membuat dan menampilkan Dialog
+    dialog = Dialog()
+    dialog.exec_()
+
+    # Membuat dan menampilkan Widget
+    widget = Widget()
+    widget.show()
+
+    sys.exit(app.exec_())
